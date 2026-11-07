@@ -1,10 +1,17 @@
 # GBU Campus
 
-Live site: https://campus-production-ce74.up.railway.app
+**Instructor-produced teaching sample.** This project was produced by the course instructor as a sample for learning AI-assisted development. It is **not an official 3D tour of Great Bay University**, an official campus map, or a surveyed reconstruction. The night story is fictional.
 
-The 2026-10-05 crawling-limb revision is deployed and verified on Railway: articulated finger grips, uneven limb pulls, grounded contact, wet tissue, drag marks and staggered reattachment. [Play Haunted night](https://campus-production-ce74.up.railway.app/night/) or [open the Day tour](https://campus-production-ce74.up.railway.app/). Refresh an existing tab once. References, motion review and deployment checks: [crawling-limbs-evidence.md](artifacts/crawling-limbs-evidence.md). Earlier character provenance remains in [realistic-students-evidence.md](artifacts/realistic-students-evidence.md), and campus publication history in [railway-model-evidence.md](artifacts/railway-model-evidence.md).
+Live site — GitHub Pages:
 
-One campus website with two modes: **Day tour** opens at `/`; **Haunted night** opens at `/night/`. Use the shared header to switch in the same tab. Night pause and ending screens also offer **Return to day tour**. Switching modes ends the current visit or run and stops its audio.
+- [Day tour](https://greenquark.github.io/world/): try **Take the guided visit** and **Explore on foot**.
+- [Haunted night](https://greenquark.github.io/world/night/): try **Begin the night** and **Watch demo** from the title screen.
+
+[Game source](https://github.com/greenquark/gbu-campus) and [hosting repository](https://github.com/greenquark/greenquark.github.io) are separate.
+
+The 2026-10-05 crawling-limb revision added: articulated finger grips, uneven limb pulls, grounded contact, wet tissue, drag marks and staggered reattachment. [Play Haunted night](https://greenquark.github.io/world/night/) or [open the Day tour](https://greenquark.github.io/world/). Refresh an existing tab once. References, motion review and deployment checks: [crawling-limbs-evidence.md](artifacts/crawling-limbs-evidence.md). Earlier character provenance remains in [realistic-students-evidence.md](artifacts/realistic-students-evidence.md), and historical Railway publication evidence in [railway-model-evidence.md](artifacts/railway-model-evidence.md). These are historical QA records, not verification of the current Pages deployment.
+
+One campus website with two modes: on GitHub Pages, **Day tour** opens at `/world/` and **Haunted night** at `/world/night/`. Local development uses `/` and `/night/` respectively. Use the shared header to switch in the same tab. Night pause and ending screens also offer **Return to day tour**. Switching modes ends the current visit or run and stops its audio.
 
 The rebuilt campus follows the physical model: towers at one end, the crescent and garden in the middle, and sports buildings and dormitories at the other. Day tour offers six landmark stops and a guided campus walk. Haunted night adds four location-specific challenges: restore the water reflection, listen in the west teaching block, complete a timed blue-track lap, and replay the dormitory melody. It retains GBU-shirt zombie students, blood loss, kicks, slowly reassembling limbs and touch controls; the kick now uses a photographic running shoe and trousers. Select **Watch demo** from the night title screen.
 
@@ -26,13 +33,17 @@ On Windows, after the first build you can also double-click **Start-GBU-Campus.c
 
 The Git repository includes `tour/`, `night/`, `shared/`, source assets, build/server tools and written evidence. Generated `dist/` and `release/`, dependencies, local `Old/` snapshots, screenshots, recordings and raw QA results are excluded. Evidence documents describe historical runs; their local capture paths are not included in this source repository.
 
-## Deploy
+## GitHub Pages hosting
 
-`npm run build` builds both modes and packages only the finished app into `release/`. That is the Railway upload directory. It contains the built site, a dependency-free Node server, package.json and Dockerfile. Source files, course materials, original standalone projects, QA captures, recordings, credentials and dependencies stay outside the upload.
+Production hosting is **GitHub Pages**, at https://greenquark.github.io/world/; night mode is at https://greenquark.github.io/world/night/.
 
-The server accepts Railway's PORT, listens on 0.0.0.0 in the container, and exposes `/healthz`. Docker runs as a non-root user. Configure the service health check to `/healthz`; the intended settings are recorded in `tools/railway-health.graphql`. Deprecated railway.json was omitted from the release. Production deployment identity and verification are recorded in `artifacts/final-evidence.md`.
+The [Pages workflow](https://github.com/greenquark/greenquark.github.io/blob/main/.github/workflows/pages.yml) lives in the **hosting repository**, `greenquark/greenquark.github.io`. It checks out this game repository, adapts asset/navigation/build paths to the `/world/` prefix, installs dependencies with Node 22, builds both scenes and copies the static `dist/` output into `public/world/`. It uploads the assembled static site and deploys it to GitHub Pages.
 
-Both the daytime and night scenes have independent route bundles, so one mode is active at a time. Missing assets return 404 instead of HTML. Debug scene hooks are available only with `?debug`; normal visitors see no test interface.
+To publish a source update, merge it into this game's `main`, then manually run that workflow in the hosting repository. The current workflow also runs on changes to the hosting repository's `main`; a commit to this game repository alone does not trigger it. Check the actual workflow run and the live day/night routes after publishing. The workflow is the authority for the current packaging steps; this README change does not itself certify a fresh deployment or playtest.
+
+Pages serves the static build. The local `npm start` server and the `release/` Node/Docker package are not the Pages hosting payload. The older Railway server/health-check instructions and deployment evidence remain in Git history and the historical evidence documents; Railway is not the current hosting route.
+
+Both daytime and night scenes have independent route bundles, so one mode is active at a time. Debug scene hooks are available only with `?debug`; normal visitors see no test interface.
 
 ## Verification and provenance
 
